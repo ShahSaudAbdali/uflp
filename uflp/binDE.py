@@ -7,7 +7,7 @@ from numpy import clip
 from numpy import argmin
 from numpy import min
 from numpy import around
-#from matplotlib import pyplot
+from matplotlib import pyplot
 import binarization
 import transferFunctions
 
@@ -99,7 +99,7 @@ def mutation(x, F):
 def check_bounds(mutated, bounds):
     mutated_bound = [clip(mutated[i], bounds[i, 0], bounds[i, 1]) for i in range(len(bounds))]
     return mutated_bound
-#
+
 # # define crossover operation
 def crossover(mutated, target, dims, cr):
     p = rand(dims)
@@ -117,6 +117,11 @@ def differential_evolution(pop_size, bounds, iter, F, cr):
     prev_obj = best_obj
     # initialise list to store the objective function value at each iteration
     obj_iter = list()
+
+    #define coordinates to plot the graph
+    xCoord = list()
+    yCoord = list()
+
     # run iterations of the algorithm
     for i in range(iter):
         # iterate over all candidate solutions
@@ -133,7 +138,7 @@ def differential_evolution(pop_size, bounds, iter, F, cr):
 
             ########################Work On this####################################
             obj_target = obj(pop[j])          #calculate obj func for target vector
-            obj_trial = obj(trial)              #calculate obj func for trial vector
+            obj_trial = obj(trial)            #calculate obj func for trial vector
             # perform selection
             if obj_trial < obj_target:
                 # replace the target vector with the trial vector
@@ -151,15 +156,18 @@ def differential_evolution(pop_size, bounds, iter, F, cr):
             obj_iter.append(best_obj)
             # report progress at each iteration
             print('Iteration: %d f([%s]) = %.5f' % (i, around(best_vector, decimals=5), best_obj))
+            xCoord.append(i)
+            yCoord.append(best_obj)
+    pyplot.plot(xCoord, yCoord)
+    pyplot.show()
     return [best_vector, best_obj, obj_iter]
 
 #Applying DE to the transformed binary array
 pop_size = 10
 bounds = asarray([(-5.0, 5.0), (-5.0, 5.0)])
-iter = 100                      #No of iterations for crossover
+iter = 1000                     #No of iterations for crossover
 F = 0.5                         #SF for mutation
 cr = 0.7                        #Cross Over Rate
 
 solution = differential_evolution(pop_size, bounds, iter, F, cr)
 print('\nSolution: f([%s]) = %.5f' % (around(solution[0], decimals=5), solution[1]))
-
