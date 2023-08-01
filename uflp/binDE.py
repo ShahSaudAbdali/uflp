@@ -1,5 +1,3 @@
-import math
-import random
 from numpy.random import rand
 from numpy.random import choice
 from numpy import asarray
@@ -12,7 +10,7 @@ import binarization
 import transferFunctions
 
 #Parsing the input file from ORLIB. Resource can be found @https://resources.mpi-inf.mpg.de/departments/d1/projects/benchmarks/UflLib/packages.html
-fileRef = open("./ORLIB/ORLIB-uncap/70/cap71.txt", "r")
+fileRef = open("../ORLIB/ORLIB-uncap/70/cap71.txt", "r")
 file = fileRef.readlines()
 listOfOpeningFacility = []
 costOfOpeningFacility = []
