@@ -1,7 +1,9 @@
 import numpy as np
 
 def uflp_objective(solution, f_cost, c_cost):
-    total_cost = np.sum(c_cost * solution) + np.sum(f_cost * (np.sum(solution, axis=1) > 0))
+    y = np.sum(f_cost * (np.sum(solution, axis=0, dtype=int) > 0)) * 1
+    total_cost = np.sum(c_cost * solution) + y
+    print('total cost:', total_cost)
     return total_cost
 
 def differential_evolution_uflp(customers, facilities, f_cost, c_cost, population_size=50, max_generations=100, F=0.8, CR=0.5):
@@ -11,7 +13,7 @@ def differential_evolution_uflp(customers, facilities, f_cost, c_cost, populatio
     for gen in range(max_generations):
         for i in range(population_size):
             # Mutation
-            a, b, c = np.random.choice(population_size, 3, replace=False)
+            a, b, c = np.random.choice(population, 3, replace=False)
             v = population[a] + F * (population[b] - population[c])
 
             # Crossover
@@ -64,4 +66,4 @@ if __name__ == "__main__":
     print("Customer to Facility Cost Array: \n", c_cost)
     best_solution = differential_evolution_uflp(customers, facilities, f_cost, c_cost)
     print("Best facility assignment to customers:\n", best_solution)
-    # print("Total cost of the solution:", uflp_objective(best_solution, f_cost, c_cost))
+    print("Total cost of the solution:", uflp_objective(best_solution, f_cost, c_cost))
