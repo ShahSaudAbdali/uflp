@@ -1,5 +1,20 @@
 import numpy as np
 
+#Modify this function for DE.
+def objective_function(solution, cost_matrix):
+    total_cost = 0
+    num_facilities = cost_matrix.shape[0]
+    num_locations = cost_matrix.shape[1]
+
+    for facility in range(num_facilities):
+        # Find the index of the location assigned to the facility
+        location_index = solution[facility]
+
+        # Add the cost of the connection to the total cost
+        total_cost += cost_matrix[facility, location_index]
+
+    return total_cost
+
 def uflp_objective(solution, f_cost, c_cost):
     y = np.sum(f_cost * (np.sum(solution, axis=0, dtype=int) > 0)) * 1
     total_cost = np.sum(c_cost * solution) + y

@@ -40,7 +40,7 @@ def pso_uflp(cost_matrix, num_particles, num_iterations):
     global_best_cost = personal_best_costs[global_best_index]
 
     # PSO parameters
-    inertia_weight = 0.5
+    inertia_weight = 0.6
     cognitive_coefficient = 2.0
     social_coefficient = 2.0
 
@@ -101,7 +101,6 @@ print("Total Facility: ", facilities, "Total Customers: ", customers)
 print("Facility Opening Cost Array: ", f_cost)
 print("Customer to Facility Cost Array: \n", c_cost)
 
-# cost_matrix = np.array([[1, 2, 3], [4, 5, 6]])
 cost_matrix = c_cost
 num_particles = 20
 num_iterations = 100
